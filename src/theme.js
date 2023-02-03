@@ -2,6 +2,7 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
 import { Mode } from "@mui/icons-material";
+import { color } from "@mui/system";
 
 // color design tokens
 
@@ -141,10 +142,77 @@ export const themeSettings = (mode) => {
           neutral: {
             dark: colors.grey[700],
             main: colors.grey[500],
+            light: colors.grey[100]
+          },
+          background: {
+            default: color.primary[500],
+          }
+        }
+        :{
+          primary: {
+            main: colors.primary[100],
+          },
+          secondary: {
+            main: colors.greyAccent[500],
+          },
+          neutral: {
+            dark: colors.grey[700],
+            main: colors.grey[500],
+            light: colors.grey[100]
+          },
+          background: {
+            default: "#fcfcfc",
           },
         }
-      )
+      ),
+    },
+    typography: {
+      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+      fontSize: 12,
+      h1: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 40,
+      },
+      h2: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 32,
+      },
+      h3: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 24,
+      },
+      h4: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 20,
+      },
+      h5: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 16,
+      },
+      h6: {
+        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontSize: 14,
+      },
     }
-  }
-}
+  };
+};
 
+// context for the color mode
+export const ColorModeContext = createContext({
+  toggleColorMode: () => {}
+});
+
+ export const useMode = () =>{
+  const [mode, setMode] = useState("dark");
+
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () =>
+      setMode((prev) => (prev === "light" ? "dark" : "light")),
+    }),
+    []
+  );
+  const theme = useMode(() => createTheme(themeSettings(mode)), [mode]);
+
+  return [theme, colorMode]
+ }

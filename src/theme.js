@@ -214,5 +214,5 @@ export const ColorModeContext = createContext({
   );
   const theme = useMode(() => createTheme(themeSettings(mode)), [mode]);
 
-  return [theme, colorMode]
+  return [theme, colorMode];
  }
